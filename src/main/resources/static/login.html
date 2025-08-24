@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        /* Mee CSS unchanged */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #141e30, #243b55);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            width: 350px;
+            color: #fff;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .login-container input[type="text"]::placeholder,
+        .login-container input[type="password"]::placeholder {
+            color: #ddd;
+        }
+
+        .login-container input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #00c6ff;
+            background-image: linear-gradient(to right, #0072ff, #00c6ff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .login-container input[type="submit"]:hover {
+            transform: scale(1.03);
+            background-image: linear-gradient(to right, #00c6ff, #0072ff);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .options label {
+            color: #ccc;
+        }
+
+        .options a {
+            color: #00c6ff;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <div class="options">
+                <label><input type="checkbox" name="remember"> Remember Me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <input type="submit" value="Login">
+        </form>
+        <div id="loginMessage" style="color:yellow; margin-top:10px;"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submit
+
+            const formData = new URLSearchParams();
+            formData.append('username', form.username.value);
+            formData.append('password', form.password.value);
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loginMessage.style.color = 'lime';
+                    loginMessage.textContent = 'Login successful! Redirecting...';
+                    // Redirect to home or dashboard page after login
+                    setTimeout(() => {
+                        window.location.href = '/home.html';
+                    }, 1500);
+                } else {
+                    loginMessage.style.color = 'yellow';
+                    loginMessage.textContent = data.message || 'Invalid username or password.';
+                }
+            })
+            .catch(err => {
+                loginMessage.style.color = 'yellow';
+                loginMessage.textContent = 'Login failed. Try again later.';
+            });
+        });
+    </script>
+
+</body>
+</html>

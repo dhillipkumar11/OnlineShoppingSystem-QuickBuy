@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopping Cart</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+    table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background-color: #2980b9; color: white; }
+    tr:hover { background-color: #f2f9ff; }
+    #placeOrderBtn {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+    #placeOrderBtn:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+    button.removeBtn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    button.removeBtn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Cart Items</h1>
+  <table id="cartTable">
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Quantity</th><th>Price</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button id="placeOrderBtn" disabled>Place Order</button>
+
+  <script>
+    const tbody = document.querySelector('#cartTable tbody');
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
+
+    function loadCart() {
+      fetch('/api/cart')
+        .then(res => res.json())
+        .then(cartItems => {
+          tbody.innerHTML = '';
+          if (cartItems.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Your cart is empty.</td></tr>';
+            placeOrderBtn.disabled = true;
+          } else {
+            placeOrderBtn.disabled = false;
+            cartItems.forEach(item => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td style="text-align:center;">${item.quantity}</td>
+                <td>₹${(item.price * item.quantity).toFixed(2)}</td>
+                <td style="text-align:center;">
+                  <button class="removeBtn" onclick="removeFromCart(${item.id})">Remove</button>
+                </td>
+              `;
+              tbody.appendChild(tr);
+            });
+          }
+        })
+        .catch(() => {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Failed to load cart items.</td></tr>';
+          placeOrderBtn.disabled = true;
+        });
+    }
+
+    function removeFromCart(productId) {
+      fetch('/api/cart/remove/' + productId, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          if (data.success) {
+            loadCart();
+          }
+        })
+        .catch(() => alert('Failed to remove product from cart.'));
+    }
+
+    placeOrderBtn.addEventListener('click', () => {
+      fetch('/api/order/place', { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          if (data.success) {
+            loadCart();
+          }
+        })
+        .catch(() => alert('Failed to place order.'));
+    });
+
+    loadCart();
+  </script>
+
+</body>
+</html>

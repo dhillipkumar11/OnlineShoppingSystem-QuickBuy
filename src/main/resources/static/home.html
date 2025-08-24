@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Online Shopping</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      color: #2c3e50;
+    }
+    header {
+      background-color: #34495e;
+      padding: 25px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    nav {
+      background-color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 0;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    nav a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      background-color: #2980b9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    nav a:hover, nav a:focus {
+      background-color: #1abc9c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(26,188,156,0.45);
+      outline: none;
+    }
+    nav img {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+    }
+    .main-content {
+      text-align: center;
+      padding: 70px 25px 100px;
+      background: url('https://images.unsplash.com/photo-1611048266686-7c4178fdff6f?auto=format&fit=crop&w=1400&q=80') no-repeat center/cover;
+      color: #fff;
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: inset 0 0 0 80vw rgba(0,0,0,0.4);
+    }
+    .main-content h2 {
+      font-size: 48px;
+      margin-bottom: 25px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+    }
+    .main-content p {
+      font-size: 24px;
+      margin-bottom: 40px;
+      font-weight: 600;
+      opacity: 0.85;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    .cara-link {
+      margin-top: 50px;
+    }
+    .cara-link a {
+      background-color: #e67e22;
+      color: white;
+      padding: 20px 48px;
+      text-decoration: none;
+      font-size: 26px;
+      font-weight: 700;
+      border-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: background-color 0.4s ease, transform 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 15px rgba(230,126,34,0.5);
+    }
+    .cara-link a:hover, .cara-link a:focus {
+      background-color: #27ae60;
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(39,174,96,0.6);
+      outline: none;
+    }
+    .cara-link i {
+      margin-right: 18px;
+      font-size: 32px;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+    }
+    footer {
+      background-color: #34495e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      letter-spacing: 1px;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);
+    }
+    @media (max-width: 768px) {
+      .main-content h2 { font-size: 34px; }
+      .main-content p { font-size: 18px; }
+      nav { gap: 15px; }
+      nav a { font-size: 16px; padding: 10px 16px; }
+    }
+    @media (max-width: 480px) {
+      .main-content h2 { font-size: 28px; }
+      .main-content p { font-size: 16px; }
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to Online Shopping</h1>
+</header>
+
+<nav>
+  <a href="/products.html">
+    <img src="https://cdn-icons-png.flaticon.com/128/107/107831.png" alt="Products" />
+    View Products
+  </a>
+  <a href="/cart.html">
+    <img src="https://cdn-icons-png.flaticon.com/128/263/263142.png" alt="Cart" />
+    View Cart
+  </a>
+  <a href="/orders.html">
+    <img src="https://cdn-icons-png.flaticon.com/128/2991/2991108.png" alt="Orders" />
+    Order History
+  </a>
+  <a href="#" onclick="logoutUser(event)">
+    <img src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png" alt="Logout" />
+    Logout
+  </a>
+</nav>
+
+<div class="main-content">
+  <h2>Explore the Latest Trends</h2>
+  <p>Discover amazing deals on your favorite products</p>
+  <div class="cara-link">
+    <a href="/Cara.html">
+      <i class="fas fa-external-link-alt"></i>
+      Go to Cara Website
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Online Shopping Portal. All rights reserved.</p>
+</footer>
+
+<script>
+  function logoutUser(event) {
+    event.preventDefault();
+    fetch('/api/logout')
+      .then(response => response.json())
+      .then(data => {
+        if(data.success) {
+          alert('Logged out successfully');
+          window.location.href = '/login.html';
+        } else {
+          alert('Logout failed: ' + data.message);
+        }
+      }).catch(error => {
+        alert('Error logging out: ' + error);
+      });
+  }
+</script>
+
+</body>
+</html>

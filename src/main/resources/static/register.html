@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register - DhilliKart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Mee existing CSS unchanged */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #f2f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    .container h2 {
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 600;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #007aff;
+      outline: none;
+    }
+    .submit-btn {
+      width: 100%;
+      background-color: #007aff;
+      color: #fff;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .submit-btn:hover {
+      background-color: #005fcc;
+    }
+    .error {
+      color: #d93025;
+      font-size: 13px;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .footer-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    .footer-text a {
+      color: #007aff;
+      text-decoration: none;
+    }
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Create Your Account</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+      </div>
+      <input type="submit" value="Register" class="submit-btn" />
+      <p class="error" id="errorMsg"></p>
+    </form>
+    <div class="footer-text">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        username: form.username.value.trim(),
+        password: form.password.value.trim()
+      };
+
+      if(!data.username || !data.password) {
+        errorMsg.textContent = "Username and password cannot be empty!";
+        return;
+      } 
+
+      fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        if(response.success) {
+          errorMsg.style.color = 'green';
+          errorMsg.textContent = 'Registration successful! Redirecting to login...';
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        } else {
+          errorMsg.style.color = 'red';
+          errorMsg.textContent = response.message || 'Registration failed. Try again.';
+        }
+      })
+      .catch(() => {
+        errorMsg.style.color = 'red';
+        errorMsg.textContent = 'Error occurred. Please try later.';
+      });
+    });
+  </script>
+
+</body>
+</html>
