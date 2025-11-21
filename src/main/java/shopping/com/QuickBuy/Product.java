@@ -6,7 +6,7 @@ public class Product {
     private int quantity;
     private double price;
 
-    // constructor for cart/order
+ 
     public Product(int id, String name, int quantity, double price) {
         this.id = id;
         this.name = name;
@@ -14,15 +14,15 @@ public class Product {
         this.price = price;
     }
 
-    // ✅ extra constructor for simple product listing
+     
     public Product(int id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quantity = 1; // default quantity = 1
+        this.quantity = 1; 
     }
 
-    // getters & setters
+     
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -35,7 +35,7 @@ public class Product {
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
 
-    // helper method
+   
     public double getTotalPrice() {
         return this.quantity * this.price;
     }
