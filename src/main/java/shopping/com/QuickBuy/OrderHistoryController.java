@@ -27,7 +27,7 @@ public class OrderHistoryController {
     public Object getOrderHistory(HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
-            // User not logged in
+            
             return Map.of("success", false, "message", "User not authenticated");
         }
         String sql = "SELECT product_id, product_name, quantity, price, total FROM orders WHERE username = ?";
@@ -51,7 +51,7 @@ public class OrderHistoryController {
         return Map.of("success", true, "orders", orders);
     }
 
-    // Inner class for order items
+     
     public static class OrderItem {
         private int productId;
         private String productName;
@@ -59,7 +59,7 @@ public class OrderHistoryController {
         private double price;
         private double total;
 
-        // Getters and setters
+         
         public int getProductId() { return productId; }
         public void setProductId(int productId) { this.productId = productId; }
 
