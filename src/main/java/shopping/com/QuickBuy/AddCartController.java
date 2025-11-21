@@ -28,10 +28,10 @@ public class AddCartController {
 
         Product cartItem = cart.get(id);
         if (cartItem == null) {
-            // Using constructor with quantity=1 for new cart item
+             
             cartItem = new Product(prod.getId(), prod.getName(), 1, prod.getPrice());
         } else {
-            // Increase quantity for existing cart item
+             
             cartItem.setQuantity(cartItem.getQuantity() + 1);
         }
         cart.put(id, cartItem);
