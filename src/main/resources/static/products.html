@@ -66,7 +66,7 @@
   <button onclick="placeOrder()">Place Order</button>
 
 <script>
-  // Load products and display in products table
+   
   function loadProducts() {
     fetch('/api/products')
       .then(res => res.json())
@@ -85,8 +85,7 @@
         });
       });
   }
-
-  // Add to cart API call
+ 
   function addToCart(productId) {
     fetch('/api/cart/add?id=' + productId, { method: 'POST' })
       .then(res => res.json())
@@ -97,7 +96,7 @@
       .catch(() => alert('Failed to add to cart.'));
   }
 
-  // Load cart and display in cart table
+  
   function loadCart() {
     fetch('/api/cart')
       .then(res => res.json())
@@ -121,7 +120,7 @@
       });
   }
 
-  // Place order API call
+ 
   function placeOrder() {
     fetch('/api/order/place', { method: 'POST' })
       .then(res => res.json())
@@ -133,8 +132,7 @@
       })
       .catch(() => alert('Failed to place order.'));
   }
-
-  // Initial load
+ 
   loadProducts();
   loadCart();
 </script>
